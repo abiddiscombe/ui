@@ -1,3 +1,5 @@
+// [ abiddiscombe/ui ] Surface
+
 import { twMerge } from "tailwind-merge";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -5,24 +7,28 @@ const cvaSurface = cva(
   "overflow-hidden rounded border border-neutral-200 bg-white p-4 shadow-xs",
 );
 
-type SurfaceProps = React.HTMLAttributes<HTMLElement> &
-  VariantProps<typeof cvaSurface> & {
-    as?: React.ElementType;
-  };
-
 /**
+ * Renders a foreground container for content.
  *
- * @component
- * @description Returns a UI backdrop layer.
+ * @author abiddiscombe
  */
 
-export default function Surface(p: SurfaceProps) {
+export default function Surface(
+  p: React.HTMLAttributes<HTMLElement> &
+    VariantProps<typeof cvaSurface> & {
+      as?: React.ElementType;
+    },
+) {
   const Tag = p.as ?? "div";
-  const classes = twMerge(
-    cvaSurface({
-      className: p.className,
-    }),
-  );
 
-  return <Tag {...p} className={classes} />;
+  return (
+    <Tag
+      {...p}
+      className={twMerge(
+        cvaSurface({
+          className: p.className,
+        }),
+      )}
+    />
+  );
 }

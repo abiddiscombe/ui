@@ -1,3 +1,5 @@
+// [ abiddiscombe/ui ] Spinner
+
 import { twMerge } from "tailwind-merge";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -17,23 +19,22 @@ const cvaSpinner = cva(
   },
 );
 
-type SpinnerProps = React.HTMLAttributes<HTMLElement> &
-  VariantProps<typeof cvaSpinner> & {
-    children?: never;
-  };
-
 /**
- * @component
- * @description Returns a circular spinner / progress element.
+ * Renders a circular spinner element for loading states.
+ *
+ * @author abiddiscombe
  */
 
-export default function Spinner(p: SpinnerProps) {
-  const classes = twMerge(cvaSpinner({ size: p.size, className: p.className }));
-
+export default function Spinner(
+  p: React.HTMLAttributes<HTMLElement> &
+    VariantProps<typeof cvaSpinner> & {
+      children?: never;
+    },
+) {
   return (
     <span
       {...p}
-      className={classes}
+      className={twMerge(cvaSpinner({ size: p.size, className: p.className }))}
       role="progressbar"
       aria-busy="true"
       aria-valuetext="Please wait..."

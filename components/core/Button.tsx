@@ -1,5 +1,7 @@
-import { twMerge } from "tailwind-merge";
+// [ abiddiscombe/ui ] Button
+
 import { Button as HuiButton } from "@headlessui/react";
+import { twMerge } from "tailwind-merge";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const cvaButton = cva(
@@ -14,7 +16,7 @@ const cvaButton = cva(
         true: [
           "grid cursor-not-allowed grid-cols-1 grid-rows-1 place-items-center *:col-1 *:row-1 *:first-of-type:z-10 *:last-of-type:invisible *:last-of-type:z-0 *:aria-busy:h-4 *:aria-busy:w-4 *:aria-busy:animate-spin *:aria-busy:rounded-full *:aria-busy:border-2",
         ],
-        false: "",
+        false: null,
       },
       variant: {
         ghost:
@@ -61,33 +63,32 @@ const cvaButton = cva(
   },
 );
 
-type ButtonProps = React.HTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof cvaButton> & {
-    working?: boolean;
-    disabled?: boolean;
-  };
-
 /**
- * @component
- * @description Renders a button with support for iconography and loading states.
+ * Renders a button with support for iconography and loading states.
+ *
+ * @author abiddiscombe
  */
 
-export default function Button(p: ButtonProps) {
-  const classes = twMerge(
-    cvaButton({
-      kind: p.kind,
-      working: p.working,
-      variant: p.variant,
-      className: p.className,
-    }),
-  );
-
+export default function Button(
+  p: React.HTMLAttributes<HTMLButtonElement> &
+    VariantProps<typeof cvaButton> & {
+      working?: boolean;
+      disabled?: boolean;
+    },
+) {
   return (
     <HuiButton
       {...p}
       data-hover={p.working}
       data-active={p.working}
-      className={classes}
+      className={twMerge(
+        cvaButton({
+          kind: p.kind,
+          working: p.working,
+          variant: p.variant,
+          className: p.className,
+        }),
+      )}
     >
       {p.working && (
         <span

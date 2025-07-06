@@ -1,5 +1,7 @@
-import { cva, type VariantProps } from "class-variance-authority";
+// [ abiddiscombe/ui ] Typography
+
 import { twMerge } from "tailwind-merge";
+import { cva, type VariantProps } from "class-variance-authority";
 
 const cvaTypography = cva("", {
   variants: {
@@ -16,24 +18,28 @@ const cvaTypography = cva("", {
   },
 });
 
-type TypographyProps = React.HTMLAttributes<HTMLParagraphElement> &
-  VariantProps<typeof cvaTypography>;
-
 /**
+ * Renders heading elements or paragraph (body) text.
  *
- * @component
- * @decription Renders headings or body text.
+ * @author abiddiscombe
  */
 
-export default function Typography(p: TypographyProps) {
+export default function Typography(
+  p: React.HTMLAttributes<HTMLParagraphElement> &
+    VariantProps<typeof cvaTypography>,
+) {
   const Tag =
     p.variant === "body" || p.variant === "subtext" ? "p" : (p.variant ?? "p");
-  const classes = twMerge(
-    cvaTypography({
-      variant: p.variant,
-      className: p.className,
-    }),
-  );
 
-  return <Tag {...p} className={classes} />;
+  return (
+    <Tag
+      {...p}
+      className={twMerge(
+        cvaTypography({
+          variant: p.variant,
+          className: p.className,
+        }),
+      )}
+    />
+  );
 }
