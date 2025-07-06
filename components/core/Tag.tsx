@@ -1,3 +1,5 @@
+// [ abiddiscombe/ui ] Tag
+
 import { twMerge } from "tailwind-merge";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -16,18 +18,25 @@ const cvaTag = cva("shrink-0 rounded px-2.5 py-1 text-sm", {
   },
 });
 
-type TagProps = React.HTMLAttributes<HTMLElement> & VariantProps<typeof cvaTag>;
-
 /**
+ * Renders an inline label for use as a visual tag.
  *
- * @component
- * @description Returns an inline tag or label element.
+ * @author abiddiscombe
  */
 
-export default function Tag(p: TagProps) {
-  const classes = twMerge(
-    cvaTag({ variant: p.variant, className: p.className }),
+export default function Tag(
+  p: React.HTMLAttributes<HTMLElement> &
+    VariantProps<typeof cvaTag> & {
+      as?: React.ElementType;
+    },
+) {
+  const Tag = p.as ?? "span";
+  return (
+    <Tag
+      {...p}
+      className={twMerge(
+        cvaTag({ variant: p.variant, className: p.className }),
+      )}
+    />
   );
-
-  return <span {...p} className={classes} />;
 }
